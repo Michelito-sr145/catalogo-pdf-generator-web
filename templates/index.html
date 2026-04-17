@@ -3,19 +3,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Venta</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+    <!---header--->
     <header>
-        <h1>PDF Venta</h1>
+        <h1>Catálogo PDF</h1>
     </header>
 
-    <main>
+    <!---Sections--->
+    <section class="main-section">
         <h2>Generador de Catálogos PDF</h2>
-        <p>Crea catálogos profesionales desde carga manual o Excel.</p>
-        <a href="https://www.google.com" target="_blank">Empezar</a>
-    </main>
+        <p>Crea catálogos profesionales desde una carga manual o subiendo tu archivo Excel.</p>
+        <p>Muestra tus productos de forma profesional y atractiva.</p>
+        <button id="open-modal-inicial">Comenzar</button>
+    </section>
 
-    <script src="static/js/main.js"></script>
+    <section class="modalcontainer" id="modal-inicial">
+        <div class="modal-box">
+            <h2>Seleccionar método</h2>
+            <p>Elige cómo deseas comenzar</p>
+            <div class="inicio-options">
+                <button id="formulario-manual">
+                    Carga Manual
+                </button>
+                <button id="open-modal-excel">
+                    Cargar Excel
+                </button>
+            </div>
+            <button id="close-modal-inicial">
+                Cerrar
+            </button>
+        </div>
+    </section>
+
+    <!-- Modal Excel -->
+    <section class="modalcontainer" id="modal-excel">
+        <div class="modal-box">
+            <h2>Cargar Excel</h2>
+            <form id="excel-form" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+            
+                <h3>Mapeo de columnas</h3>
+                <p>Por favor, indique qué representa cada columna</p>
+            
+                <div id="columns-container">
+                    <input type="text" name="A" placeholder="Columna A = ?">
+                    <input type="text" name="B" placeholder="Columna B = ?">
+                    <input type="text" name="C" placeholder="Columna C = ?">
+                </div>
+            
+                <button type="button" id="add-column">Agregar columna extra</button>
+                
+                <div class="excel-options">
+                    <button id="close-modal-excel">Volver</button>
+                    <button type="submit">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!---footer--->
+    <footer class="footer">
+        <p class="copyright">
+            &copy; Michelito145 | All Rights Reserved
+        </p>
+    </footer>
+
+    <!---Script--->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>

@@ -1,0 +1,164 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+    color: #333;
+}
+
+/* Header */
+header {
+    padding: 20px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+header h1 {
+    font-size: 22px;
+    color: #2c3e50;
+}
+
+/* Main Section */
+.main-section {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.main-section h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.main-section p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Botones */
+button {
+    background: linear-gradient(135deg, #007BFF, #0056d2);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    padding: 12px 25px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin: 5px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 123, 255, 0.3);
+}
+
+/* Modal contenedor (fondo oscuro) */
+.modalcontainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+/* Modal activo */
+.modalcontainer.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* Caja del modal */
+.modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    width: 420px;
+    max-width: 90%;
+
+    /* 🔥 CLAVE */
+    max-height: 80vh;
+    overflow-y: auto;
+
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Animación al abrir */
+.modalcontainer.show .modal-box {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-box h2 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.modal-box p {
+    margin-bottom: 20px;
+    color: #777;
+}
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+#formulario-manual {
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+}
+
+#open-modal-excel {
+    background: linear-gradient(135deg, #6f42c1, #4b2c91);
+}
+
+#close-modal-inicial,
+#close-modal-excel {
+    background: #ccc;
+    color: #333;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    font-size: 13px;
+    color: #777;
+}
+
