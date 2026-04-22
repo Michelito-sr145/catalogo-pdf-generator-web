@@ -90,11 +90,8 @@ button:hover {
     padding: 30px;
     width: 420px;
     max-width: 90%;
-
-    /* 🔥 CLAVE */
     max-height: 80vh;
     overflow-y: auto;
-
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     transform: translateY(-20px);
@@ -117,14 +114,6 @@ button:hover {
     margin-bottom: 20px;
     color: #777;
 }
-.modal-body::-webkit-scrollbar {
-    width: 6px;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 10px;
-}
 
 #formulario-manual {
     background: linear-gradient(135deg, #28a745, #1e7e34);
@@ -140,14 +129,111 @@ button:hover {
     color: #333;
 }
 
-select {
+
+/* Contenedor de secciones del modal */
+#excel-upload,
+#excel-mapping {
     width: 100%;
-    padding: 10px;
-    margin: 8px 0 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
 }
 
+/* Inputs (file + text) */
+.modal-box input[type="file"] {
+    width: 100%;
+    margin: 15px 0;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+.modal-box input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border 0.2s;
+}
+
+.modal-box input[type="text"]:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+/* Labels */
+.modal-box label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    margin-top: 10px;
+    color: #555;
+}
+
+/* Contenedor de columnas */
+#columns-container {
+    margin-top: 10px;
+    text-align: left;
+}
+
+
+/* Opciones (botones abajo) */
+.excel-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Botones dentro del modal Excel */
+#excel-mapping button,
+#excel-upload button {
+    flex: 1;
+}
+
+/* Botón agregar columna */
+#add-column {
+    width: 100%;
+    margin-top: 10px;
+    background: #17a2b8;
+}
+
+/* Hover especial */
+#add-column:hover {
+    box-shadow: 0 6px 14px rgba(23, 162, 184, 0.3);
+}
+
+/* Scroll más prolijo */
+.modal-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.column-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.column-item input {
+    flex: 1;
+}
+
+/* Botón eliminar */
+.delete-column {
+    background: #dc3545;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.delete-column:hover {
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+}
 
 /* Footer */
 .footer {

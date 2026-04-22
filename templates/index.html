@@ -40,26 +40,34 @@
     <!-- Modal Excel -->
     <section class="modalcontainer" id="modal-excel">
         <div class="modal-box">
-            <h2>Cargar Excel</h2>
-            <form id="excel-form" enctype="multipart/form-data">
-                <input type="file" name="file" required>
-            
-                <h3>Mapeo de columnas</h3>
-                <p>Por favor, indique qué representa cada columna</p>
-            
-                <div id="columns-container">
-                    <input type="text" name="A" placeholder="Columna A = ?">
-                    <input type="text" name="B" placeholder="Columna B = ?">
-                    <input type="text" name="C" placeholder="Columna C = ?">
-                </div>
-            
+            <!-- STEP 1: Subir archivo -->
+            <div id="excel-upload">
+                <h2>Cargar Excel</h2>
+                <form id="excel-form" enctype="multipart/form-data">
+                    <input type="file" name="file" required>
+
+                    <div class="excel-options">
+                        <button type="button" id="close-modal-excel">Volver</button>
+                        <button type="submit">Subir archivo</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- STEP 2: Mapeo (oculto al inicio) -->
+            <div id="excel-mapping" style="display: none;">
+                <h2>Mapeo de columnas</h2>
+                <p>Indique qué representa cada columna</p>
+
+                <div id="columns-container"></div>
+
                 <button type="button" id="add-column">Agregar columna extra</button>
-                
+
                 <div class="excel-options">
-                    <button id="close-modal-excel">Volver</button>
-                    <button type="submit">Continuar</button>
+                    <button type="button" id="back-to-upload">Volver</button>
+                    <button type="button" id="continue-btn">Continuar</button>
                 </div>
-            </form>
+            </div>
+
         </div>
     </section>
 
