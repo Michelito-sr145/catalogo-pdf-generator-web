@@ -11,9 +11,11 @@ const form = document.getElementById('excel-form');
 const container = document.getElementById('columns-container');
 const uploadSection = document.getElementById('excel-upload');
 const mappingSection = document.getElementById('excel-mapping');
-const continueBtn = document.getElementById('continue-btn');
 const backToUpload = document.getElementById('back-to-upload');
 const addColumnBtn = document.getElementById('add-column');
+
+const BtnExcel = document.getElementById('continue-btn');
+const BtnManual = document.getElementById('formulario-manual');
 
 // Funcion General de Modales
 function openModal(modal) {
@@ -107,16 +109,24 @@ addColumnBtn.addEventListener('click', () => {
 
 // Crear bloque de mapeo para cada columna del Excel o nueva columna extra
 function crearBloque(labelText, inputName, placeholder, esExtra = false) {
+
     const wrapper = document.createElement('div');
     wrapper.classList.add('column-item');
+
     const label = document.createElement('label');
     label.innerText = labelText;
+
     const input = document.createElement('input');
     input.type = 'text';
-    input.name = inputName;
+
+    // 🔥 CLAVE TOTAL
+    input.name = labelText;  // columna real Excel
+
     input.placeholder = placeholder;
+
     wrapper.appendChild(label);
     wrapper.appendChild(input);
+
     if (esExtra) {
         const deleteBtn = document.createElement('button');
         deleteBtn.type = 'button';
@@ -129,16 +139,78 @@ function crearBloque(labelText, inputName, placeholder, esExtra = false) {
 
         wrapper.appendChild(deleteBtn);
     }
+
     return wrapper;
 }
 
-// Continuar al siguiente paso Fomulario final o vista final
-continueBtn.addEventListener('click', () => {
-    window.location.href = "https://www.google.com";
+// Fomulario final o vista final de producto y cracion de pdf
+
+// Base de datos con las columnas de excel
+BtnExcel.addEventListener('click', async () => {
+
+    const formData = new FormData();
+
+    const fileInput = document.querySelector('input[type="file"]');
+    formData.append('file', fileInput.files[0]);
+
+    const inputs = container.querySelectorAll('input');
+
+    inputs.forEach(input => {
+        formData.append(input.name, input.value);
+    });
+
+    try {
+        const response = await fetch('/procesar-excel', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            alert("Error al procesar Excel");
+            return;
+        }
+
+        const data = await response.json();
+
+        // Guardar en sesión
+        await fetch('/configurar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                modo: "excel",
+                columnas: data.columnas,
+                productos: data.productos
+            })
+        });
+
+        // Redirigir
+        window.location.href = "/productos";
+
+    } catch (error) {
+        console.error(error);
+        alert("Error inesperado");
+    }
 });
 
+// Sin Base de datos carga de productos manual 1 dato de ejemplo.
+BtnManual.addEventListener('click', async () => {
 
-// Ajustar cambiando en vez de que sea un select sea un cuadro de texto con el placeholder correcto.
-// Ajustar la carga de los datos, ya que al subir el archivo excel
-// no recarga el modal. sino hacer que carge primero el excel y luego activar el formulario una vez subido el excel.
-// haciendo que el formulario aparezca o que aparezca un mensaje de que no cargo correctamente o el archivo no era un excel.
+    const productoEjemplo = [{
+        nombre: "Producto 1",
+        precio: "123456.78",
+        descripcion: "Esto es un ejemplo de un producto.",
+        imagen: "https://via.placeholder.com/300"
+    }];
+
+    await fetch('/configurar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            modo: "manual",
+            columnas: ["nombre", "precio", "descripcion", "imagen"],
+            productos: productoEjemplo
+        })
+    });
+
+    window.location.href = "/productos";
+});

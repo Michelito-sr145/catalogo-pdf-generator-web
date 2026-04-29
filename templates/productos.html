@@ -1,0 +1,91 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Venta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/productos.css') }}">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <h1>Lista de Productos</h1>
+    </header>
+
+    <!-- MAIN -->
+    <section class="main-section">
+        <div id="product-list"></div>
+
+        <div class="actions">
+            <button id="add-product">Agregar Producto</button>
+            <button id="end-pdf">Crear PDF</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; Michelito145 | All Rights Reserved</p>
+    </footer>
+
+    <!-- MODAL PRODUCTO -->
+    <div class="modalcontainer" id="modal-producto">
+        <div class="modal-box">
+
+            <h2>Producto</h2>
+
+            <!-- IMAGEN -->
+            <div class="image-preview-container">
+                <img id="preview-img" src="/static/img/SinImagen.jpg">
+                <input type="file" id="imagen" hidden>
+                <button type="button" id="change-image">Cambiar imagen</button>
+            </div>
+
+            <!-- CAMPOS -->
+            <div id="form-container"></div>
+            <button id="add-field">Agregar campo</button>
+
+            <!-- ACCIONES -->
+            <div class="modal-actions">
+                <button id="save-product">Guardar</button>
+                <button id="close-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NUEVO CAMPO -->
+    <div class="modalcontainer" id="modal-field">
+        <div class="modal-box">
+            <h3>Nuevo campo</h3>
+
+            <input type="text" id="field-name" placeholder="Ej: Color, Marca">
+
+            <div class="modal-actions">
+                <button id="save-field">Agregar</button>
+                <button id="close-field">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ELIMINAR -->
+    <div class="modalcontainer" id="modal-delete">
+        <div class="modal-box">
+            <h3>¿Eliminar producto?</h3>
+
+            <div id="delete-preview"></div>
+
+            <div class="modal-actions">
+                <button id="confirm-delete">Eliminar</button>
+                <button id="cancel-delete">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATOS BACKEND -->
+    <script>
+        const COLUMNAS = {{ columnas | tojson | safe }};
+        const PRODUCTOS = {{ productos | tojson | safe }};
+    </script>
+
+    <script src="{{ url_for('static', filename='js/productos.js') }}"></script>
+</body>
+</html>
