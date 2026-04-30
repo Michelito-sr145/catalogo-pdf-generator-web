@@ -41,6 +41,20 @@ const deletePreview = document.getElementById('delete-preview');
 const confirmDeleteBtn = document.getElementById('confirm-delete');
 const cancelDeleteBtn = document.getElementById('cancel-delete');
 
+// Validacion para el PDF
+
+const btnPDF = document.getElementById('end-pdf');
+
+const modalValidacion = document.getElementById('modal-validacion');
+const validacionContent = document.getElementById('validacion-content');
+
+const prevBtn = document.getElementById('prev-product');
+const nextBtn = document.getElementById('next-product');
+const editBtn = document.getElementById('edit-product');
+const deleteBtn = document.getElementById('delete-product');
+const closeValidacion = document.getElementById('close-validacion');
+
+
 // ======= Modal =======
 openBtn.onclick = () => {
     limpiarForm();
@@ -208,6 +222,111 @@ function limpiarForm() {
     imagenPreview = null;
     previewImg.src = "/static/img/SinImagen.jpg";
 }
+
+// ========================= Validacion para el PDF =========================
+let productosSinImagen = [];
+let indexValidacion = 0;
+
+// ===== Boton Crear PDF =====
+btnPDF.onclick = () => {
+
+    productosSinImagen = productos
+        .map((p, i) => ({ ...p, index: i }))
+        .filter(p => !p.imagen);
+
+    if (productosSinImagen.length > 0) {
+        indexValidacion = 0;
+        mostrarProductoValidacion();
+        modalValidacion.classList.add('show');
+    } else {
+        continuarPDF();
+    }
+};
+
+// ===== Mostramos el producto sin imagen =====
+function mostrarProductoValidacion() {
+
+    const p = productosSinImagen[indexValidacion];
+
+    let html = "";
+
+    for (let key in p.campos) {
+        html += `<p><strong>${key}:</strong> ${p.campos[key] ?? ""}</p>`;
+    }
+
+    validacionContent.innerHTML = `
+        <div class="product-card">
+            <div class="image-container">
+                <img src="/static/img/SinImagen.jpg">
+            </div>
+            ${html}
+        </div>
+        <p>${indexValidacion + 1} de ${productosSinImagen.length}</p>
+    `;
+}
+
+// ===== NAVEGACIÓN =====
+nextBtn.onclick = () => {
+    if (indexValidacion < productosSinImagen.length - 1) {
+        indexValidacion++;
+        mostrarProductoValidacion();
+    } else {
+        modalValidacion.classList.remove('show');
+        continuarPDF();
+    }
+};
+
+prevBtn.onclick = () => {
+    if (indexValidacion > 0) {
+        indexValidacion--;
+        mostrarProductoValidacion();
+    }
+};
+
+// ===== Editar desde modal pdf =====
+editBtn.onclick = () => {
+    const p = productosSinImagen[indexValidacion];
+
+    modalValidacion.classList.remove('show');
+    editar(p.index);
+};
+
+// ===== Eliminar desde modal pdf =====
+deleteBtn.onclick = () => {
+
+    const p = productosSinImagen[indexValidacion];
+
+    productos.splice(p.index, 1);
+
+    // actualizar lista
+    productosSinImagen = productos
+        .map((p, i) => ({ ...p, index: i }))
+        .filter(p => !p.imagen);
+
+    if (productosSinImagen.length === 0) {
+        modalValidacion.classList.remove('show');
+        render();
+        return;
+    }
+
+    if (indexValidacion >= productosSinImagen.length) {
+        indexValidacion = productosSinImagen.length - 1;
+    }
+
+    render();
+    mostrarProductoValidacion();
+};
+
+// ===== Cerrar Validacion =====
+closeValidacion.onclick = () => {
+    modalValidacion.classList.remove('show');
+};
+
+// ===== Continuar con el PDF =====
+function continuarPDF() {
+    // Aqui agregar la lógica para generar el PDF o redirigir a la siguiente etapa
+}
+
 
 // ======= INIT =======
 render();

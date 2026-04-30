@@ -80,6 +80,25 @@
         </div>
     </div>
 
+    <!-- MODAL VALIDACIÓN IMÁGENES -->
+    <div class="modalcontainer" id="modal-validacion">
+        <div class="modal-box">
+
+            <h3>Productos sin imagen</h3>
+
+            <div id="validacion-content"></div>
+
+            <div class="modal-actions">
+                <button id="delete-product">Eliminar</button>
+                <button id="edit-product">Editar</button>
+                <button id="prev-product">Anterior</button>
+                <button id="next-product">Siguiente</button>
+            </div>
+
+            <button id="close-validacion">Cerrar</button>
+        </div>
+    </div>
+
     <!-- DATOS BACKEND -->
     <script>
         const COLUMNAS = {{ columnas | tojson | safe }};

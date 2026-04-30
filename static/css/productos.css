@@ -106,3 +106,19 @@
     max-height: 200px;
     overflow-y: auto;
 }
+
+#validacion-content {
+    margin: 15px 0;
+}
+
+#validacion-content .product-card {
+    text-align: left;
+}
+
+.modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+}
