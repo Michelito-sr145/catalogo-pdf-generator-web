@@ -103,10 +103,14 @@ saveFieldBtn.onclick = () => {
 changeImageBtn.onclick = () => imagenInput.click();
 
 imagenInput.addEventListener('change', () => {
-    if (imagenInput.files[0]) {
-        imagenPreview = URL.createObjectURL(imagenInput.files[0]);
+    const file = imagenInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        imagenPreview = e.target.result;
         previewImg.src = imagenPreview;
-    }
+    };
+    reader.readAsDataURL(file);
 });
 
 // ======= Guardar =======
@@ -322,11 +326,36 @@ closeValidacion.onclick = () => {
     modalValidacion.classList.remove('show');
 };
 
-// ===== Continuar con el PDF =====
-function continuarPDF() {
-    // Aqui agregar la lógica para generar el PDF o redirigir a la siguiente etapa
-}
 
+// ===== Continuar con el PDF =====
+async function continuarPDF() {
+    try {
+        const response = await fetch('/crear-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productos)
+        });
+        if (!response.ok) {
+            alert("Error al generar PDF");
+            return;
+        }
+
+        // Descargar PDF
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "catalogo.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    } catch (error) {
+        console.error(error);
+        alert("Error inesperado");
+    }
+}
 
 // ======= INIT =======
 render();
